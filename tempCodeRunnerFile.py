@@ -1,12 +1,6 @@
-def find_median(I1, I2):
-    combined = sorted(I1 + I2)  # Merge and sort the two arrays
-    length = len(combined)
-    if length % 2 == 0:
-        return (combined[length // 2 - 1] + combined[length // 2]) / 2  # Correct indexing for even length
-    else:
-        return combined[length // 2]  # Correct indexing for odd length
-
-I1 = [1, 2, 3]
-I2 = [4, 5]
-Output = find_median(I1, I2)
-print(Output)  #
+previous_num = 0
+for i in range(1, 11):
+    #print(i)
+    sum = i + previous_num
+    print("Current Number = ", i , "previous Number =", previous_num , "sum = ", sum)
+    previous_num = i
