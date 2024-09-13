@@ -50,6 +50,9 @@ This repository contains Python Jupyter Lab notebooks with solutions to programm
 - **OrangeMini**
 - **Neeyamo**
 - **Reventure**
+- **Accenture**
+- **Tech Mahendra**
+- **Mini Orange**
 - **Instagram Programming Page: code_with_vicky**
 
 
