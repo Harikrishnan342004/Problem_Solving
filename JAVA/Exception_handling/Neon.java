@@ -1,3 +1,4 @@
+package java.Exception_handling;
 import java.util.*;
 
 class NotNeonException extends Exception
