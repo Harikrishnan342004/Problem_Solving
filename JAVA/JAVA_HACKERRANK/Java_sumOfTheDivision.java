@@ -18,6 +18,10 @@ public class Java_sumOfTheDivision {
                 sum += i + N / i;
             }
         }
+        if(square * square == N)
+        {
+            sum -= square;
+        }
         System.out.println(sum);
 
     }
