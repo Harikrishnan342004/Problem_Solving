@@ -15,6 +15,17 @@ class Library:
         for book in self.availableBooks:
             print(book)
 
+# 🔹 3. Where is Abstraction in your code?
+
+# 👉 Abstraction = Hiding internal logic and showing only functionality
+
+# In your program:l
+
+# User doesn’t know:
+
+# How books are stored
+# How removal happens
+
     def lendBook(self, requestedBook):
         if requestedBook in self.availableBooks:
             print("You have now borrowed the book")
