@@ -5,7 +5,7 @@
 class Car:
     numberOfWheels = 4  #Public attributes
     _color = "Black"    # Procted Attributes
-    ___yearOFManufacture = 2017  # Private Attributes
+    ___yearOFManufacture = 2017  # Private Attribute
 
 class Bmw(Car):
     def __init__(self):
