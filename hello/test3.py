@@ -2,54 +2,31 @@ import sys
 input = sys.stdin.readline
 
 def solve(n: int, k: int, a: list) -> int:
-    num_neg = sum(1 for x in a if x < 0)
-    if k >= num_neg:
-        return sum(abs(x) for x in a)
-    c = [-x for x in a]
-    def kadane_with_penalty(lam):
-        NEG_INF = float('-inf')
-        out_val, out_cnt = 0, 0
-        in_val, in_cnt = NEG_INF, 0
-        for v in c:
-            ext_val = in_val + v if in_val != NEG_INF else NEG_INF
-            ext_cnt = in_cnt
-            new_val = out_val + v - lam
-            new_cnt = out_cnt + 1
-            if ext_val > new_val:
-                ni_val, ni_cnt = ext_val, ext_cnt
-            else:
-                ni_val, ni_cnt = new_val, new_cnt
-            if in_val != NEG_INF and in_val > out_val:
-                no_val, no_cnt = in_val, in_cnt
-            else:
-                no_val, no_cnt = out_val, out_cnt
-            out_val, out_cnt = no_val, no_cnt
-            in_val, in_cnt = ni_val, ni_cnt
-        if in_val != NEG_INF and in_val > out_val:
-            return in_val, in_cnt
-        return out_val, out_cnt
-    lo, hi = 0, 2 * 10**9
-    while lo < hi:
-        mid = (lo + hi) // 2
-        _, cnt = kadane_with_penalty(mid)
-        if cnt <= k:
-            hi = mid
-        else:
-            lo = mid + 1
-    best_val, _ = kadane_with_penalty(lo)
-    gain = best_val + lo * k
-    return sum(a) + 2 * gain
+    pre = [0] * (n + 1)
+    for i in range(n):
+        pre[i+1] = pre[i] + a[i]
+    
+    INF = float('inf')
+    dp = [[-INF] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
+    
+    for i in range(1, n + 1):
+        for j in range(k + 1):
+            if dp[i-1][j] != -INF:
+                dp[i][j] = max(dp[i][j], dp[i-1][j] + a[i-1])
+            if j > 0:
+                for s in range(i):
+                    if dp[s][j-1] != -INF:
+                        flip_gain = -(pre[i] - pre[s])
+                        dp[i][j] = max(dp[i][j], dp[s][j-1] + flip_gain)
+    
+    return max(dp[n][j] for j in range(k + 1))
 
-# ── Run 3 Open Test Cases ──
 if __name__ == "__main__":
-    test_cases = [
-        (5, 2, [-10, 20, -30, 40, -50], 130),
-        (3, 1, [10, 20, 30],             60),
-        (4, 3, [-5, -3, 2, -8],          18),
-    ]
-    for i, (n, k, a, expected) in enumerate(test_cases, 1):
-        result = solve(n, k, a)
-        status = "✅ PASS" if result == expected else "❌ FAIL"
-        print(f"Case {i}: Input(n={n}, k={k}, a={a})")
-        print(f"         Expected={expected} | Got={result} | {status}")
-        print()
+    try:
+        n = int(input())
+        k = int(input())
+        a = list(map(int, input().split()))
+        print(solve(n, k, a))
+    except (EOFError, ValueError):
+        pass
