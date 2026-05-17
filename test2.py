@@ -1,32 +1,23 @@
+# Program 2
+
+
 import sys
-from collections import defaultdict
 
 def solve():
-    input_data = sys.stdin.read().split()
-    idx = 0
-    n = int(input_data[idx])
-    idx += 1
-    arr = [int(input_data[idx + i]) for i in range(n)]
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    k = int(data[1])
+    a = [int(data[2 + i]) for i in range(n)]
     
-    MOD = 10**9 + 7
-    freq = defaultdict(int)
-    prefix_sum = 0
-    count = 0
+    total = 0
+    for i in range(n):
+        # i is 0-indexed, so position = i+1
+        # item at position i was preceded by a trigger if i > 0 and i % k == 0
+        if i > 0 and i % k == 0:
+            total += 2 * a[i]
+        else:
+            total += a[i]
     
-    for k in range(n):
-        prefix_sum += arr[k]
-        
-        s = prefix_sum
-        i = 1
-        while i * i <= s:
-            if s % i == 0:
-                count = (count + freq[i]) % MOD
-                if i != s // i:
-                    count = (count + freq[s // i]) % MOD
-            i += 1
-        
-        freq[prefix_sum] += 1
-    
-    print(count)
+    print(total)
 
 solve()
